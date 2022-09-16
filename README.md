@@ -26,8 +26,15 @@ gntpc -i *input filename* -f rootracker
 
 This will produce a file which is called something like gntp.0.gtrac.root which is more appropriate for analysis. 
 
+## Full detector simulation
+In order to produce a full simulation, there are three steps. First the intial interactions are created using Genie, then the resulting particles are propagated through Geant allowing more interactions than just the intial ones, and finally the detector geometry and effects are added with detsim. These steps are all accomplished using various fcl files.  
+
+### FCL files
+This stands for Fermilab Hierarchical Configuration Language (FHiCL). These are files which contain information like particle types and detector geometry. They can be edited in order to utilize specific types of geometry or specific interaction types. In order to check what parameters are being applied to the simulation, the command fhicl-dump name.fcl can be used. This will print out all the information used in the fcl file without having to go through every included fcl file. For this project, it was necessary to edit fcl files as by default they produce both NC and CC events. This was problematic since CC events are much less likely than NC events, so the amount of events that would have needed to be generated in order to get a reasonable about of CC events was too much. These edited fcl files are included in this repository. 
 
 
+### Genie step
+Running the genie simulation is conceptually the same as running stand alone Genie except here we use larsoft rather than geven. In order to run Genie, a fcl file is required. Again, this can be a default fcl file or one that has been edited. For this project, we used an edited file.  
 
 
 
