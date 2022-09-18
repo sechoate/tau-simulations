@@ -14,7 +14,7 @@ In the specific case of generating $\nu_\tau$ CC events, the command becomes the
 gevgen -n *number of events* -p 16 -t 1000180400 -e 0,100 -f
 /path/to/file/flux_dune_neutrino_FD.root,nutau_fluxosc --cross-sections /path/to/file/gxspl-FNALsmall.xml --event-generator-list "CC"  
 
-where 16 is the PDG code for the $\nu_\tau$ and 1000180400 is the PDG for the argon nucleus. It is possible to run without the flux file and cross section file, however it takes longer because then Genie has to calculate the flux and cross section for each event. The flux and cross section files for $\nu_\tau$, $\nu_\mu$, and $\nu_e$ are included in this repository for completeness. The final component is the event-generator-list where CC corresponds to generating exclusively CC events. 
+where 16 is the PDG code for the $\nu_\tau$ and 1000180400 is the PDG for the argon nucleus. It is possible to run without the flux file and cross section file, however it takes longer because then Genie has to calculate the flux and cross section for each event. The final component is the event-generator-list where CC corresponds to generating exclusively CC events. 
 
 ### Running for muon neutrino or electron neutrino for comparison 
 The command would be the same to run for $\nu_\mu$ or $\nu_e$ CC interactions as it was for running $\nu_\tau$ CC interactions with three changes. The first change is for the pdg. For $\nu_\mu$ it is -p 14 and for $\nu_e$ it is -p 11. The second change is to the flux file, rather than using the $\nu_\tau$ flux file it should be replaced with the appropriate $\nu_\mu$ or $\nu_e$ flux file. The final change is for the cross section file which also should be replaced with the appropriate $\nu_\mu$ or $\nu_e$ file. 
