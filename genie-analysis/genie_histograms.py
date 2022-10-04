@@ -51,30 +51,30 @@ Start with the muon file
 mu_energy = []     #will fill with energy values for the muon 
 mu_momentum = []   #will fill with angle values calculated from the momentum for the muon 
 
-for i in range(0,tree_mu.GetEntries()):      #loop over event tree for muon CC file 
+for i in range(0,tree_mu.GetEntries()):          #loop over event tree for muon CC file 
 	tree_mu.GetEntry(i)
 	evtnum_mu = getattr(tree_mu,"EvtNum")    #define event number
 	numint_mu = getattr(tree_mu,"StdHepN")   #define interaction number 
 
 		
 	for j in range(0,numint_mu):                                                    #loop over the number of interactions in each event 
-		pdg_mu = getattr(tree_mu,"StdHepPdg")                                       #define pdg
-		momentum_mu = getattr(tree_mu,"StdHepP4")                                   #define four momentum 
-		momentum_cast_mu = np.frombuffer(momentum_mu,dtype=float)                   #convert four momentum from a buffer to an array 
-		energy_mu = momentum_cast_mu[3::4][j]                                       #energy is the 4th value in the array 
-		momentum_x_mu = momentum_cast_mu[0::4][j]                                   #x component of the momentum is the first value in the array 
-		momentum_y_mu = momentum_cast_mu[1::4][j]                                   #y component of the momentum is the second value in the array 
-		momentum_z_mu = momentum_cast_mu[2::4][j]                                   #z component of the momentum is the third value in the array 
-		beam = TVector3(0,0,1)                                                      #define the beam along the z axis 
-		momentum_vec_mu = TVector3(momentum_x_mu,momentum_y_mu,momentum_z_mu)       #create 3 vector of x,y,z momentum
-		angle_mu = root.Math.VectorUtil.Angle(momentum_vec_mu,beam)                 #calculate the angle between the momentum vector and beam 
+		pdg_mu = getattr(tree_mu,"StdHepPdg")                                   #define pdg
+		momentum_mu = getattr(tree_mu,"StdHepP4")                               #define four momentum 
+		momentum_cast_mu = np.frombuffer(momentum_mu,dtype=float)               #convert four momentum from a buffer to an array 
+		energy_mu = momentum_cast_mu[3::4][j]                                   #energy is the 4th value in the array 
+		momentum_x_mu = momentum_cast_mu[0::4][j]                               #x component of the momentum is the first value in the array 
+		momentum_y_mu = momentum_cast_mu[1::4][j]                               #y component of the momentum is the second value in the array 
+		momentum_z_mu = momentum_cast_mu[2::4][j]                               #z component of the momentum is the third value in the array 
+		beam = TVector3(0,0,1)                                                  #define the beam along the z axis 
+		momentum_vec_mu = TVector3(momentum_x_mu,momentum_y_mu,momentum_z_mu)   #create 3 vector of x,y,z momentum
+		angle_mu = root.Math.VectorUtil.Angle(momentum_vec_mu,beam)             #calculate the angle between the momentum vector and beam 
 		
 
-        if(pdg_mu[j] == 13):                   #if muon resulted from nu_mu CC interaction
-			hist_mu_energy.Fill(energy_mu)     #fill the energy histogram
-			hist_mu_momentum.Fill(angle_mu)    #fill the angle histogram 
-			mu_energy.append(energy_mu)        #append energy values to empty array
-			mu_momentum.append(angle_mu)       #append angle values to empty array 
+        if(pdg_mu[j] == 13):                            #if muon resulted from nu_mu CC interaction
+			hist_mu_energy.Fill(energy_mu)  #fill the energy histogram
+			hist_mu_momentum.Fill(angle_mu) #fill the angle histogram 
+			mu_energy.append(energy_mu)     #append energy values to empty array
+			mu_momentum.append(angle_mu)    #append angle values to empty array 
 			#print(evtnum_mu)
 
 
@@ -132,34 +132,34 @@ tau_e_energy = []
 tau_e_momentum = []
 
 
-for k in range(0,tree.GetEntries()):         #loop over event tree
+for k in range(0,tree.GetEntries()):             #loop over event tree
 	tree.GetEntry(k)
 	evtnum_tau = getattr(tree,"EvtNum")      #define event number
 	numint_tau = getattr(tree,"StdHepN")     #define interaction count
 	
-	for l in range(0,numint_tau):                                      #loop over the number of interactions in the event 
-		pdg_tau = getattr(tree,"StdHepPdg")                            #define pdg
-		fdaughter_tau = getattr(tree,"StdHepFd")                       #define the first daughter 
-		ldaughter_tau = getattr(tree,"StdHepLd")                       #define the last daughter
-		momentum_tau = getattr(tree,"StdHepP4")                        #define the four momentum 
-		momentum_cast_tau = np.frombuffer(momentum_tau,dtype=float)    #convert momentum from buffer to array 
-		energy_tau = momentum_cast_tau[3::4][l]                        #define energy from four momentum 
+	for l in range(0,numint_tau):                                        #loop over the number of interactions in the event 
+		pdg_tau = getattr(tree,"StdHepPdg")                          #define pdg
+		fdaughter_tau = getattr(tree,"StdHepFd")                     #define the first daughter 
+		ldaughter_tau = getattr(tree,"StdHepLd")                     #define the last daughter
+		momentum_tau = getattr(tree,"StdHepP4")                      #define the four momentum 
+		momentum_cast_tau = np.frombuffer(momentum_tau,dtype=float)  #convert momentum from buffer to array 
+		energy_tau = momentum_cast_tau[3::4][l]                      #define energy from four momentum 
 
 
-		if(pdg_tau[l] == 15):                                                                                                             #if the resulting particle from the nu_tau CC interaction is a tau 
+		if(pdg_tau[l] == 15):                                                                       #if the resulting particle from the nu_tau CC interaction is a tau 
 			#print("event: {:<4} first daughter: {:<5} last daughter: {:<5}".format(evtnum_tau,fdaughter_tau[l],ldaughter_tau[l]))	
-			for p in range(fdaughter_tau[l],ldaughter_tau[l]+1):                                                                          #loop over the tau's first daughter to last daughter to get all decay products 
+			for p in range(fdaughter_tau[l],ldaughter_tau[l]+1):                                #loop over the tau's first daughter to last daughter  
 				#print(evtnum_tau,pdg_tau[p])
-				energy_new = momentum_cast_tau[3::4][p]                                                                                   #redefine energy so it's just for the tau's daughters
-				momentum_x_tau = momentum_cast_tau[0::4][p]                                                                               #define x momentum
-				momentum_y_tau = momentum_cast_tau[1::4][p]                                                                               #define y momentum 
-				momentum_z_tau = momentum_cast_tau[2::4][p]                                                                               #define z momentum 
-				beam2 = TVector3(0,0,1)                                                                                                   #define beam in the z direction 
-				momentum_vec_tau = TVector3(momentum_x_tau,momentum_y_tau,momentum_z_tau)                                                 #create a three vector of the momentum components 
-				angle_tau = root.Math.VectorUtil.Angle(momentum_vec_tau,beam2)		                                                      #angle between beam and momentum vector 
+				energy_new = momentum_cast_tau[3::4][p]                                     #redefine energy so it's just for the tau's daughters
+				momentum_x_tau = momentum_cast_tau[0::4][p]                                 #define x momentum
+				momentum_y_tau = momentum_cast_tau[1::4][p]                                 #define y momentum 
+				momentum_z_tau = momentum_cast_tau[2::4][p]                                 #define z momentum 
+				beam2 = TVector3(0,0,1)                                                     #define beam in the z direction 
+				momentum_vec_tau = TVector3(momentum_x_tau,momentum_y_tau,momentum_z_tau)   #create a three vector of the momentum components 
+				angle_tau = root.Math.VectorUtil.Angle(momentum_vec_tau,beam2)		    #angle between beam and momentum vector 
 									
 				#muon comparison	
-				if(pdg_tau[p] == 13):                      #if the daughter of the tau is a muon 
+				if(pdg_tau[p] == 13):                          #if the daughter of the tau is a muon 
 					#print(evtnum_tau,energy_new)
 					hist_tau_energy.Fill(energy_new)       #fill the energy histogram
 					hist_tau_momentum.Fill(angle_tau)      #fill the angle histogram 
@@ -168,7 +168,7 @@ for k in range(0,tree.GetEntries()):         #loop over event tree
 					#print(evtnum_tau)
 				
 				#electron comparison
-				if(pdg_tau[p] == 11):                      #if the daughter of the tau is an electron 
+				if(pdg_tau[p] == 11):                          #if the daughter of the tau is an electron 
 					hist_tau_energy_e.Fill(energy_new)     #fill the energy histogram 
 					hist_tau_momentum_e.Fill(angle_tau)    #fill the angle histogram
 					tau_e_energy.append(energy_new)        #append the energy values to the array
