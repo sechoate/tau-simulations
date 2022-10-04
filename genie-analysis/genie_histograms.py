@@ -2,6 +2,13 @@ import ROOT as root
 import numpy as np
 from ROOT import TGraph,TVector3,TCanvas,TH1F,THStack,kRed,TLegend,kBlue
 
+'''
+Purpose of this is to create various histograms with the goal of comparing muons that result from nu_mu CC interactions to muons that result 
+from the decay of the tau which comes from nu_tau CC interactions and separately to compare electrons the result from nu_e CC interactions to 
+electrons that result from the decay of the tau which comes from nu_tau CC interactions 
+The values that are compared are energy and the angle of the particle with respect to the beam (z direction)
+'''
+
 f = root.TFile.Open("gntp.0.gtrac.root","READ")   #open the file 
 #for comparing to other simulations, open the other files 
 f_tau = root.TFile.Open("gntp.0.gtrac_tau.root","READ")
