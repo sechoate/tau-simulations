@@ -1,3 +1,8 @@
+/*
+This code outputs given properties for all events 
+ */
+
+
 void outProperties(){
   TFile* f = new TFile("prodgenie_nutau_dune10kt_gen.root");
   //f->ls();
