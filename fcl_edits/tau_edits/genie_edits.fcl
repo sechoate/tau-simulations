@@ -22,7 +22,7 @@ standard_genie:
  GlobalTimeOffset: 10000.          #in ns - 10000 means the spill appears 10 us into the readout window
  RandomTimeOffset: 10000.          #length of spill in ns
  FiducialCut:      "none"          #fiducial cut, see https://cdcvs.fnal.gov/redmine/projects/nusoft/wiki/GENIEHelper
- GenFlavors:       [12,14,-12,-14] #pdg codes of flux generator neutrino flavors
+ GenFlavors:       [12,14] #pdg codes of flux generator neutrino flavors
  Environment:      [  ]  # obsolete
  ProductionMode:   "yes"           #turn off the GENIE verbosity
  EventGeneratorList: "CC"
