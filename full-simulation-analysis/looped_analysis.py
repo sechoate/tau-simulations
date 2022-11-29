@@ -17,18 +17,19 @@ ROOT.gROOT.ProcessLine('#include "gallery/Handle.h"')
 ROOT.gROOT.ProcessLine('template gallery::ValidHandle<simb::MCParticle> gallery::Event::getValidHandle<simb::MCParticle>(art::InputTag const&) const;')
 ROOT.gROOT.ProcessLine('template bool gallery::Event::getByLabel<simb::MCParticle>(art::InputTag const&, gallery::Handle<simb::MCParticle>&) const;')
 
+#multiple files for each simulation step were required due to memory constraints 
+#this is the same as simulation_analysis.py but looped over each file individually, eventaully drawing results from each onto one canvas 
 
-files = glob.glob('*detsim.root')
-#print(files)
-
-#files = ["prodgenie_nutau_dune10kt_10_gen_g4_detsim.root","prodgenie_nutau_dune10kt_20_gen_g4_detsim.root","prodgenie_nutau_dune10kt_30_gen_g4_detsim.root",
-	#"prodgenie_nutau_dune10kt_40_gen_g4_detsim.root","prodgenie_nutau_dune10kt_50_gen_g4_detsim.root"]
+files = glob.glob('*detsim.root')    #list of all files ending in detsim.root in current directory
 
 
-	
+#set up any histograms 	
 energy_hist = TH1F('muon_energy','Muon Energy nu_tau CC',200,-5,75)
 
+
+#loop over each file 
 for j in np.arange(0,len(files)):
+	
 	#open file
 	filename = ROOT.vector(ROOT.string)()
 	filename.push_back(files[j])
@@ -36,18 +37,6 @@ for j in np.arange(0,len(files)):
 
 	inputTagGenerator = ROOT.art.InputTag("largeant");
 
-
-
-	#angle_hist = TH1F('muon_angle', 'Muon Angle nu_tau CC',200,-5,75)
-
-	#energy_hist_elect = TH1F('electron_energy','Electron Energy nu_tau CC',200,-5,75)
-	#angle_hist_elect = TH1F('electron_angle', 'Electron Angle nu_tau CC',200,-5,75)
-
-
-	#momentum_hist_z = TH1F('z_momentum','Muon z Momentum nu_tau CC',200,-5,75)
-	#momentum_elect_hist_z = TH1F('z_momentum','Electron z Momentum nu_tau CC',200,-5,75)
-
-	
 
 	ev.toBegin()
 
@@ -89,7 +78,7 @@ for j in np.arange(0,len(files)):
 					#angle_hist.Fill(angle_momentum)
 					#momentum_hist_z.Fill(z_momentum)
 					#print(angle_momentum)
-			energy_hist.Fill(energy)
+			
 			#if mother == 0:
 				#if pdg == 11:
 					#energy_hist_elect.Fill(energy)	 
@@ -97,33 +86,18 @@ for j in np.arange(0,len(files)):
 					#momentum_elect_hist_z.Fill(z_momentum)
 					#print(energy,angle_momentum)
 		
-			
-			
-			#if pdg == 11 or pdg == -11:
-				#cnt_elect += 1
-				#print('Event: {} Count: {} Pdg: {:<20}  Energy: {:<30} Mother: {:<20} First Daughter: {:<20} Angle: {}'.format(numEvent,i,pdg,energy,mother,fdaughter,angle_momentum))
-			
-			#if pdg == 13 or pdg == -13:	
-				#cnt_muon += 1
-				#print('Event: {} Count: {} Pdg: {:<20}  Energy: {:<30} Mother: {:<20} First Daughter: {:<20} Angle: {}'.format(numEvent,i,pdg,energy,mother,fdaughter,angle_momentum))
-			
-		
-		#	print(numEvent,pdg)
-			#if pdg == 16 or pdg == -16:
-			#	print(numEvent)
 		ev.next()
 		numEvent+=1
 
 
 	#print("number of electrons: {}".format(cnt_elect))
 	#print("number of muons: {}".format(cnt_muon))
+	
+	#draw histograms on same canvas
 	if j==0:
 		energy_hist.Draw()
 	else:
 		energy_hist.Draw("SAME")
-	#angle_hist.Draw()
-
-	#energy_hist_elect.Draw()
-	#angle_hist_elect.Draw()
-	#momentum_elect_hist_z.Draw()
+	
+	
 
