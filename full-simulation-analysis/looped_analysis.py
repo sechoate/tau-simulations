@@ -18,7 +18,7 @@ ROOT.gROOT.ProcessLine('template gallery::ValidHandle<simb::MCParticle> gallery:
 ROOT.gROOT.ProcessLine('template bool gallery::Event::getByLabel<simb::MCParticle>(art::InputTag const&, gallery::Handle<simb::MCParticle>&) const;')
 
 #multiple files for each simulation step were required due to memory constraints 
-#this is the same as simulation_analysis.py but looped over each file individually, eventaully drawing results from each onto one canvas 
+#this is the same code as simulation_analysis.py but looped over each file individually, eventaully drawing results from each onto one canvas 
 
 files = glob.glob('*detsim.root')    #list of all files ending in detsim.root in current directory
 
@@ -40,7 +40,7 @@ for j in np.arange(0,len(files)):
 
 	ev.toBegin()
 
-	numEvent = j*10+1
+	numEvent = j*10+1  #event counter starts from 1
 	#cnt_elect = 0
 	#cnt_muon = 0
 
@@ -66,25 +66,21 @@ for j in np.arange(0,len(files)):
 			x_momentum = x.Px()
 			momentum_vec = TVector3(x_momentum,y_momentum,z_momentum)
 			angle_momentum = ROOT.Math.VectorUtil.Angle(momentum_vec,beam)
-			#print(energy_arr)
+			
 			#if pdg < 1000000000 and pdg != 22:
 			#if pdg < 1000000000 and pdg != 22 and pdg != 2112 and pdg != 2212 and pdg != 3122 and pdg != 3212:
-			#if mother == 0 and pdg == 16:
+	
 			#print('Event: {} Count: {} Pdg: {:<20}  Energy: {:<30} Mother: {:<20} First Daughter: {:<20} Angle: {}'.format(numEvent,i,pdg,energy,mother,fdaughter,angle_momentum)) 
+			
+			#muons from tau decay
 			#if mother == 0:
 				#if pdg == 13:
 					#energy_hist.Fill(energy)	
-					#print(numEvent, i, energy)
-					#angle_hist.Fill(angle_momentum)
-					#momentum_hist_z.Fill(z_momentum)
-					#print(angle_momentum)
 			
+			#electrons from tau decay
 			#if mother == 0:
 				#if pdg == 11:
 					#energy_hist_elect.Fill(energy)	 
-					#angle_hist_elect.Fill(angle_momentum)
-					#momentum_elect_hist_z.Fill(z_momentum)
-					#print(energy,angle_momentum)
 		
 		ev.next()
 		numEvent+=1
