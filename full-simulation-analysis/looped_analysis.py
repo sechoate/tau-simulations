@@ -39,8 +39,9 @@ for j in np.arange(0,len(files)):
 
 
 	ev.toBegin()
-
-	numEvent = j*10+1  #event counter starts from 1
+	
+	file_events = 10   #number of events per file
+	numEvent = j*file_events+1  #event counter starts from 1
 	#cnt_elect = 0
 	#cnt_muon = 0
 
