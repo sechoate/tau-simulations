@@ -1,4 +1,4 @@
-This folder contains the edited versions of each fcl file used in the chain for the full detector simulation. 
+This folder contains the edited versions of each fcl file used in the chain for the full detector simulation. When working with a FCL file on a Fermilab machine using cvmfs, the command *fhicl-dump file_name.fcl* can be used on the final file in the FCL file chain to show what properties from the previous FCL files have been applied. 
 
 # $\nu_\tau$ Simulation
 The chain given through these files goes:
