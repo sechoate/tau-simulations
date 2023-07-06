@@ -1,0 +1,6 @@
+#include "prodgenie_nu_dune10kt_1x8x14_3view_edit.fcl"
+
+process_name:  GenieGen
+
+outputs.out1.fileName:  "prodgenie_nutau_dune10ktvd_gen.root"
+physics.producers.generator.MixerConfig:    "map 14:16"
